@@ -1,52 +1,82 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" class="bg-gray-100">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ATK Online</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        function loginUser() {
-            const username = document.getElementById("user").value;
-            const password = document.getElementById("pass").value;
-
-            fetch("atk-backend-production.up.railway.app/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.token) {
-                    localStorage.setItem("token", data.token);
-                    alert("Login berhasil!");
-                    window.location.href = "index.html";
-                } else {
-                    alert("Login gagal. Periksa username & password.");
-                }
-            });
-        }
-    </script>
+    <title>Login</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="flex items-center justify-center h-screen">
 
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="bg-white shadow-lg p-10 rounded-xl w-96">
-            <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+    
+    <h2 class="text-2xl font-bold text-center mb-4">Login Pengguna</h2>
 
-            <label class="block mb-2">Username</label>
-            <input id="user" type="text" class="w-full border px-3 py-2 rounded mb-4">
+    <form id="loginForm" class="space-y-4">
+        <input id="login_user" class="w-full px-4 py-2 border rounded" placeholder="Username" required />
+        <input id="login_pass" type="password" class="w-full px-4 py-2 border rounded" placeholder="Password" required />
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+            Login
+        </button>
+    </form>
 
-            <label class="block mb-2">Password</label>
-            <input id="pass" type="password" class="w-full border px-3 py-2 rounded mb-6">
+    <hr class="my-6">
 
-            <button onclick="loginUser()" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
-                Login
-            </button>
-        </div>
-    </div>
+    <h2 class="text-xl font-semibold text-center mb-4">Registrasi Pengguna Baru</h2>
+
+    <form id="registerForm" class="space-y-4">
+        <input id="reg_user" class="w-full px-4 py-2 border rounded" placeholder="Buat Username" required />
+        <input id="reg_pass" type="password" class="w-full px-4 py-2 border rounded" placeholder="Buat Password" required />
+        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            Registrasi
+        </button>
+    </form>
+
+    <p id="status" class="text-center mt-4 font-medium"></p>
+
+</div>
+
+<script>
+const API = "atk-backend-production.up.railway.app/api/auth";
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("login_user").value;
+    const password = document.getElementById("login_pass").value;
+
+    const res = await fetch(`${API}/login`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    document.getElementById("status").innerText = data.message;
+
+    if (res.ok) {
+        localStorage.setItem("loggedInUser", username);
+        window.location.href = "produk.html";
+    }
+});
+
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("reg_user").value;
+    const password = document.getElementById("reg_pass").value;
+
+    const res = await fetch(`${API}/register`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    document.getElementById("status").innerText = data.message;
+});
+</script>
 
 </body>
 </html>
