@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATK Grocery Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        function addToCart(productId) {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                alert("Silakan login dahulu untuk menambahkan ke keranjang.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            fetch("atk-backend-production.up.railway.app/api/cart/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ productId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert("Berhasil menambahkan produk ke keranjang!");
+            });
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">ATK Online</h1>
+            <div class="space-x-6 text-lg">
+                <a href="index.html" class="hover:text-indigo-600">Home</a>
+                <a href="login.html" class="hover:text-indigo-600">Login</a>
+                <a href="produk.html" class="hover:text-indigo-600">Produk</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="pt-28 pb-20 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-extrabold leading-tight">
+                    Belanja ATK jadi lebih mudah & cepat
+                </h2>
+                <p class="mt-4 text-lg">Pulpen, pensil, buku, dan keperluan kantor lainnya.</p>
+
+                <div class="mt-6 flex space-x-4">
+                    <a href="login.html" class="px-6 py-3 bg-white text-indigo-700 rounded-xl font-semibold shadow hover:bg-gray-100">
+                        Mulai Belanja
+                    </a>
+                    <a href="produk.html" class="px-6 py-3 border border-white rounded-xl font-semibold hover:bg-white hover:text-indigo-700">
+                        Lihat Katalog
+                    </a>
+                </div>
+            </div>
+
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081170.png" class="w-80 mx-auto drop-shadow-xl">
+        </div>
+    </section>
+
+    <!-- PRODUK -->
+    <section class="py-20 max-w-7xl mx-auto px-6">
+        <h3 class="text-3xl font-bold text-center mb-12">Produk Favorit</h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+
+            <!-- Card 1 -->
+            <div class="bg-white shadow-lg rounded-xl p-6 hover:-translate-y-2 transition">
+                <img src="https://cdn-icons-png.flaticon.com/512/1577/1577562.png" class="w-20 mx-auto">
+                <h4 class="mt-4 text-xl font-semibold text-center">Pulpen Hitam</h4>
+                <p class="text-center text-gray-500">Rp 4.000</p>
+                <button onclick="addToCart('1')" class="mt-4 w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Tambah ke Keranjang
+                </button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white shadow-lg rounded-xl p-6 hover:-translate-y-2 transition">
+                <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="w-20 mx-auto">
+                <h4 class="mt-4 text-xl font-semibold text-center">Buku Tulis</h4>
+                <p class="text-center text-gray-500">Rp 5.000</p>
+                <button onclick="addToCart('2')" class="mt-4 w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Tambah ke Keranjang
+                </button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white shadow-lg rounded-xl p-6 hover:-translate-y-2 transition">
+                <img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" class="w-20 mx-auto">
+                <h4 class="mt-4 text-xl font-semibold text-center">Pensil 2B</h4>
+                <p class="text-center text-gray-500">Rp 3.000</p>
+                <button onclick="addToCart('3')" class="mt-4 w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Tambah ke Keranjang
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
