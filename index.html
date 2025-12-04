@@ -1,68 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>ATK Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATK Online Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-50">
 
-<body class="bg-gray-100">
-    <nav class="bg-blue-600 text-white p-4 flex justify-between">
-        <h1 class="text-xl font-bold">ATK Online Store</h1>
-        <div>
-            <button onclick="window.location.href='login.html'"
-                class="bg-white text-blue-600 px-4 py-2 rounded shadow">Login</button>
-        </div>
-    </nav>
+  <!-- NAVBAR -->
+  <nav class="bg-blue-700 text-white px-6 py-4 flex justify-between">
+    <h1 class="text-xl font-bold">ATK Store</h1>
+    <div>
+      <a href="login.html" class="mr-4 hover:underline">Login</a>
+      <a href="produk.html" class="hover:underline">Produk</a>
+    </div>
+  </nav>
 
-    <section class="p-6">
-        <h2 class="text-2xl font-semibold mb-4">Produk Tersedia</h2>
-        <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-    </section>
+  <!-- HERO SECTION -->
+  <section class="text-center mt-16">
+    <h2 class="text-4xl font-bold mb-4">Belanja ATK dengan Mudah</h2>
+    <p class="text-gray-600 mb-6">
+      Pen, pensil, buku, dan segala kebutuhan ATK tersedia di sini.
+    </p>
 
-    <script>
-        const API = "https://atk-backend2-production.up.railway.app";
+    <button onclick="goProduk()"
+      class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+      Lihat Produk
+    </button>
+  </section>
 
-        async function loadProducts() {
-            const res = await fetch(`${API}/api/products`);
-            const products = await res.json();
+<script>
+function goProduk() {
+  // Jika belum login → redirect ke login
+  if (!localStorage.getItem("token")) {
+    window.location.href = "login.html";
+  } else {
+    window.location.href = "produk.html";
+  }
+}
+</script>
 
-            const container = document.getElementById("product-list");
-            container.innerHTML = "";
-
-            products.forEach(p => {
-                container.innerHTML += `
-                <div class="bg-white p-4 rounded shadow">
-                    <h3 class="text-xl font-bold mb-2">${p.name}</h3>
-                    <p>Harga: Rp ${p.price}</p>
-                    <p>Stok: ${p.stock}</p>
-                    <button onclick="addToCart(${p.id})"
-                        class="bg-blue-600 text-white px-4 py-2 mt-3 rounded">Add to Cart</button>
-                </div>`;
-            });
-        }
-
-        function addToCart(id) {
-            const user = localStorage.getItem("currentUser");
-
-            if (!user) {
-                alert("Silakan login terlebih dahulu.");
-                window.location.href = "login.html";
-                return;
-            }
-
-            fetch(`${API}/api/cart`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ productId: id })
-            });
-
-            alert("Produk ditambahkan ke keranjang!");
-        }
-
-        loadProducts();
-    </script>
 </body>
-
 </html>
