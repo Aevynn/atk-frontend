@@ -1,53 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - ATK Store</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Toko ATK</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="bg-gray-100">
 
-  <div class="bg-white shadow p-6 rounded w-96">
-    <h1 class="text-xl font-bold mb-4">Login</h1>
+  <div class="flex justify-center items-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-80">
+      <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
 
-    <label class="block mb-2">Username</label>
-    <input id="username" class="w-full p-2 border rounded mb-4">
+      <input id="email"
+             class="w-full border p-2 rounded mb-3"
+             type="email" placeholder="Email">
 
-    <label class="block mb-2">Password</label>
-    <input type="password" id="password" class="w-full p-2 border rounded mb-4">
+      <input id="password"
+             class="w-full border p-2 rounded mb-4"
+             type="password" placeholder="Password">
 
-    <button onclick="login()"
-      class="w-full bg-blue-600 text-white py-2 rounded">
-      Login
-    </button>
+      <button onclick="login()"
+        class="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700 mb-3">
+        Login
+      </button>
+
+      <p id="error" class="text-red-600 text-center"></p>
+    </div>
   </div>
 
-<script>
-  const API = "https://atk-backend2-production.up.railway.app";
+  <script>
+    const API = "https://atk-backend2-production.up.railway.app";
 
-  function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    async function login() {
+      const email = document.getElementById("email").value;
+      const pass = document.getElementById("password").value;
 
-    fetch(`${API}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (!data.message.includes("berhasil")) {
-        alert("Login gagal!");
-        return;
+      const res = await fetch(`${API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: pass })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+
+        window.location.href = "produk.html";
+      } else {
+        document.getElementById("error").innerText = "Email atau password salah";
       }
-
-      localStorage.setItem("user", username);
-      alert("Login berhasil!");
-      window.location.href = "index.html";
-    });
-  }
-</script>
+    }
+  </script>
 
 </body>
 </html>
