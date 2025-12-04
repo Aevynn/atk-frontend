@@ -1,104 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Produk - Admin ATK</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Produk - ATK Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100">
 
-    <h1 class="text-2xl font-bold mb-6">Kelola Produk</h1>
+  <nav class="bg-blue-600 p-4 text-white text-xl font-bold">
+    Semua Produk
+  </nav>
 
-    <div id="admin-panel" class="hidden">
-        <h2 class="text-xl mb-3">Tambah Produk</h2>
+  <section class="p-6">
+    <div id="product-container" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+  </section>
 
-        <input id="pname" type="text" placeholder="Nama Produk"
-            class="border p-2 mr-2">
-        <input id="pprice" type="number" placeholder="Harga"
-            class="border p-2 mr-2">
-        <input id="pstock" type="number" placeholder="Stok"
-            class="border p-2 mr-2">
+<script>
+  const API = "https://atk-backend2-production.up.railway.app";
 
-        <button onclick="addProduct()"
-            class="bg-green-600 text-white px-4 py-2 rounded">Tambah</button>
-    </div>
+  fetch(`${API}/products`)
+    .then(res => res.json())
+    .then(products => {
+      const c = document.getElementById("product-container");
 
-    <h2 class="text-xl font-bold mt-6 mb-4">Daftar Produk</h2>
+      c.innerHTML = products.map(p => `
+        <div class="bg-white shadow p-4 rounded">
+          <h2 class="font-bold text-lg">${p.name}</h2>
+          <p class="text-gray-600">Rp ${p.price}</p>
+          <p class="text-gray-600">Stok: ${p.stock}</p>
+          <button onclick="addToCart(${p.id})"
+            class="mt-3 bg-green-600 text-white py-1 px-3 rounded">
+            Tambah ke Keranjang
+          </button>
+        </div>
+      `).join("");
+    });
 
-    <table class="w-full bg-white rounded shadow">
-        <thead class="bg-gray-200">
-            <tr>
-                <th class="p-2">ID</th>
-                <th class="p-2">Nama</th>
-                <th class="p-2">Harga</th>
-                <th class="p-2">Stok</th>
-                <th class="p-2">Aksi</th>
-            </tr>
-        </thead>
+  function addToCart(id) {
+    const logged = localStorage.getItem("user");
 
-        <tbody id="product-table"></tbody>
-    </table>
+    if (!logged) return window.location.href = "login.html";
 
-    <script>
-        const API = "https://atk-backend2-production.up.railway.app";
-
-        const user = JSON.parse(localStorage.getItem("currentUser"));
-
-        if (!user || user.role !== "admin") {
-            alert("Hanya admin yang boleh mengakses halaman ini.");
-            window.location.href = "index.html";
-        } else {
-            document.getElementById("admin-panel").classList.remove("hidden");
-        }
-
-        async function loadProducts() {
-            const res = await fetch(`${API}/api/products`);
-            const products = await res.json();
-
-            const table = document.getElementById("product-table");
-            table.innerHTML = "";
-
-            products.forEach(p => {
-                table.innerHTML += `
-                <tr class="border-t">
-                    <td class="p-2">${p.id}</td>
-                    <td class="p-2">${p.name}</td>
-                    <td class="p-2">${p.price}</td>
-                    <td class="p-2">${p.stock}</td>
-                    <td class="p-2">
-                        <button onclick="deleteProduct(${p.id})"
-                            class="bg-red-600 text-white px-3 py-1 rounded">Hapus</button>
-                    </td>
-                </tr>`;
-            });
-        }
-
-        async function addProduct() {
-            const name = document.getElementById("pname").value;
-            const price = document.getElementById("pprice").value;
-            const stock = document.getElementById("pstock").value;
-
-            await fetch(`${API}/api/products`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, price, stock })
-            });
-
-            alert("Produk ditambahkan!");
-            loadProducts();
-        }
-
-        async function deleteProduct(id) {
-            await fetch(`${API}/api/products/${id}`, { method: "DELETE" });
-            alert("Produk dihapus!");
-            loadProducts();
-        }
-
-        loadProducts();
-    </script>
+    fetch(`${API}/cart/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: id })
+    })
+    .then(res => res.json())
+    .then(d => alert(d.message));
+  }
+</script>
 
 </body>
-
 </html>

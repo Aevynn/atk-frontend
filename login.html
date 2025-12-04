@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Login - ATK Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Login - ATK Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center h-screen">
+<body class="bg-gray-100 flex items-center justify-center h-screen">
 
-    <div class="bg-white p-6 rounded shadow w-80">
-        <h2 class="text-xl font-bold mb-4 text-center">Login</h2>
+  <div class="bg-white shadow p-6 rounded w-96">
+    <h1 class="text-xl font-bold mb-4">Login</h1>
 
-        <input id="username" type="text" placeholder="Username"
-            class="w-full p-2 my-2 border rounded">
+    <label class="block mb-2">Username</label>
+    <input id="username" class="w-full p-2 border rounded mb-4">
 
-        <input id="password" type="password" placeholder="Password"
-            class="w-full p-2 my-2 border rounded">
+    <label class="block mb-2">Password</label>
+    <input type="password" id="password" class="w-full p-2 border rounded mb-4">
 
-        <button onclick="login()"
-            class="bg-blue-600 text-white w-full py-2 rounded mt-3">Login</button>
-    </div>
+    <button onclick="login()"
+      class="w-full bg-blue-600 text-white py-2 rounded">
+      Login
+    </button>
+  </div>
 
-    <script>
-        const API = "https://atk-backend2-production.up.railway.app";
+<script>
+  const API = "https://atk-backend2-production.up.railway.app";
 
-        async function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+  function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-            const res = await fetch(`${API}/api/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
-            });
+    fetch(`${API}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.message.includes("berhasil")) {
+        alert("Login gagal!");
+        return;
+      }
 
-            const data = await res.json();
-
-            if (!data.success) {
-                alert("Login gagal!");
-                return;
-            }
-
-            localStorage.setItem("currentUser", JSON.stringify(data.user));
-            alert("Login berhasil!");
-            window.location.href = "index.html";
-        }
-    </script>
+      localStorage.setItem("user", username);
+      alert("Login berhasil!");
+      window.location.href = "index.html";
+    });
+  }
+</script>
 
 </body>
-
 </html>
