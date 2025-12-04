@@ -1,70 +1,104 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk - ATK Online</title>
+    <title>Produk - Admin ATK</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", loadProducts);
-
-        function loadProducts() {
-            fetch("atk-backend-production.up.railway.app/api/products")
-                .then(res => res.json())
-                .then(products => {
-                    const list = document.getElementById("product-list");
-                    list.innerHTML = "";
-
-                    products.forEach(p => {
-                        list.innerHTML += `
-                            <div class="bg-white shadow-lg rounded-xl p-6">
-                                <h3 class="text-xl font-bold">${p.name}</h3>
-                                <p class="text-gray-500 mb-2">${p.price}</p>
-                                <button onclick="addToCart('${p.id}')"
-                                    class="mt-3 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-                                    Tambah ke Keranjang
-                                </button>
-                            </div>
-                        `;
-                    });
-                });
-        }
-
-        function addToCart(productId) {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                alert("Harus login dulu sebelum menambah ke keranjang.");
-                window.location.href = "login.html";
-                return;
-            }
-
-            fetch("https://your-backend-url.up.railway.app/api/cart/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify({ productId })
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert("Produk ditambahkan!");
-            });
-        }
-    </script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 p-6">
 
-    <div class="max-w-7xl mx-auto px-6 py-20">
-        <h1 class="text-3xl font-bold mb-10">Daftar Produk</h1>
+    <h1 class="text-2xl font-bold mb-6">Kelola Produk</h1>
 
-        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            <p>Memuat produk...</p>
-        </div>
+    <div id="admin-panel" class="hidden">
+        <h2 class="text-xl mb-3">Tambah Produk</h2>
+
+        <input id="pname" type="text" placeholder="Nama Produk"
+            class="border p-2 mr-2">
+        <input id="pprice" type="number" placeholder="Harga"
+            class="border p-2 mr-2">
+        <input id="pstock" type="number" placeholder="Stok"
+            class="border p-2 mr-2">
+
+        <button onclick="addProduct()"
+            class="bg-green-600 text-white px-4 py-2 rounded">Tambah</button>
     </div>
 
+    <h2 class="text-xl font-bold mt-6 mb-4">Daftar Produk</h2>
+
+    <table class="w-full bg-white rounded shadow">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="p-2">ID</th>
+                <th class="p-2">Nama</th>
+                <th class="p-2">Harga</th>
+                <th class="p-2">Stok</th>
+                <th class="p-2">Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody id="product-table"></tbody>
+    </table>
+
+    <script>
+        const API = "https://YOUR-RAILWAY-APP.up.railway.app";
+
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (!user || user.role !== "admin") {
+            alert("Hanya admin yang boleh mengakses halaman ini.");
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("admin-panel").classList.remove("hidden");
+        }
+
+        async function loadProducts() {
+            const res = await fetch(`${API}/api/products`);
+            const products = await res.json();
+
+            const table = document.getElementById("product-table");
+            table.innerHTML = "";
+
+            products.forEach(p => {
+                table.innerHTML += `
+                <tr class="border-t">
+                    <td class="p-2">${p.id}</td>
+                    <td class="p-2">${p.name}</td>
+                    <td class="p-2">${p.price}</td>
+                    <td class="p-2">${p.stock}</td>
+                    <td class="p-2">
+                        <button onclick="deleteProduct(${p.id})"
+                            class="bg-red-600 text-white px-3 py-1 rounded">Hapus</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        async function addProduct() {
+            const name = document.getElementById("pname").value;
+            const price = document.getElementById("pprice").value;
+            const stock = document.getElementById("pstock").value;
+
+            await fetch(`${API}/api/products`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, price, stock })
+            });
+
+            alert("Produk ditambahkan!");
+            loadProducts();
+        }
+
+        async function deleteProduct(id) {
+            await fetch(`${API}/api/products/${id}`, { method: "DELETE" });
+            alert("Produk dihapus!");
+            loadProducts();
+        }
+
+        loadProducts();
+    </script>
+
 </body>
+
 </html>

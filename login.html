@@ -1,82 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Login - ATK Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
 </head>
 
-<body class="flex items-center justify-center h-screen">
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-    
-    <h2 class="text-2xl font-bold text-center mb-4">Login Pengguna</h2>
+    <div class="bg-white p-6 rounded shadow w-80">
+        <h2 class="text-xl font-bold mb-4 text-center">Login</h2>
 
-    <form id="loginForm" class="space-y-4">
-        <input id="login_user" class="w-full px-4 py-2 border rounded" placeholder="Username" required />
-        <input id="login_pass" type="password" class="w-full px-4 py-2 border rounded" placeholder="Password" required />
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Login
-        </button>
-    </form>
+        <input id="username" type="text" placeholder="Username"
+            class="w-full p-2 my-2 border rounded">
 
-    <hr class="my-6">
+        <input id="password" type="password" placeholder="Password"
+            class="w-full p-2 my-2 border rounded">
 
-    <h2 class="text-xl font-semibold text-center mb-4">Registrasi Pengguna Baru</h2>
+        <button onclick="login()"
+            class="bg-blue-600 text-white w-full py-2 rounded mt-3">Login</button>
+    </div>
 
-    <form id="registerForm" class="space-y-4">
-        <input id="reg_user" class="w-full px-4 py-2 border rounded" placeholder="Buat Username" required />
-        <input id="reg_pass" type="password" class="w-full px-4 py-2 border rounded" placeholder="Buat Password" required />
-        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
-            Registrasi
-        </button>
-    </form>
+    <script>
+        const API = "https://YOUR-RAILWAY-APP.up.railway.app";
 
-    <p id="status" class="text-center mt-4 font-medium"></p>
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-</div>
+            const res = await fetch(`${API}/api/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
 
-<script>
-const API = "atk-backend-production.up.railway.app/api/auth";
+            const data = await res.json();
 
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+            if (!data.success) {
+                alert("Login gagal!");
+                return;
+            }
 
-    const username = document.getElementById("login_user").value;
-    const password = document.getElementById("login_pass").value;
-
-    const res = await fetch(`${API}/login`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-    document.getElementById("status").innerText = data.message;
-
-    if (res.ok) {
-        localStorage.setItem("loggedInUser", username);
-        window.location.href = "produk.html";
-    }
-});
-
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById("reg_user").value;
-    const password = document.getElementById("reg_pass").value;
-
-    const res = await fetch(`${API}/register`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-    document.getElementById("status").innerText = data.message;
-});
-</script>
+            localStorage.setItem("currentUser", JSON.stringify(data.user));
+            alert("Login berhasil!");
+            window.location.href = "index.html";
+        }
+    </script>
 
 </body>
+
 </html>
