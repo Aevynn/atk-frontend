@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - ATK Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/api.js"></script>
+  <script src="scripts/auth.js" defer></script>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
 
-<div class="center-box">
-    <h2>Login Akun</h2>
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
 
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
+    <input id="username" placeholder="Username" class="w-full mb-3 p-2 border rounded" />
+    <input id="password" placeholder="Password" type="password" class="w-full mb-4 p-2 border rounded" />
+    <div id="msg" class="text-red-600 mb-3"></div>
 
-    <button onclick="login()">Login</button>
+    <div class="flex space-x-3">
+      <button onclick="doLogin()" class="flex-1 bg-blue-600 text-white py-2 rounded">Login</button>
+      <a href="index.html" class="flex-1 text-center border rounded py-2">Cancel</a>
+    </div>
 
-    <p id="msg" class="error"></p>
-</div>
+    <p class="mt-4 text-sm text-gray-500">Demo creds — admin/admin123 | user/user123</p>
+  </div>
 
-<script src="scripts/api.js"></script>
-<script src="scripts/auth.js"></script>
 </body>
 </html>

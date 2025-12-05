@@ -1,50 +1,41 @@
-const user = JSON.parse(localStorage.getItem("user"));
-if (!user || user.role !== "admin") window.location = "login.html";
+document.addEventListener("DOMContentLoaded", async () => {
+  const user = JSON.parse(localStorage.getItem("atk_user") || "null");
+  if (!user || user.role !== "admin") { alert("Admin only"); window.location.href = "login.html"; return; }
+  await loadAdmin();
+});
 
 async function loadAdmin() {
-    const prod = await (await fetch(API + "/products")).json();
-    const inc = await (await fetch(API + "/admin/income")).json();
+  const products = await apiGet("/products");
+  const incomeRes = await apiGet("/transactions/income");
 
-    document.getElementById("income").innerText = "Total Pendapatan: Rp " + inc.income;
+  const adminList = document.getElementById("admin-list");
+  adminList.innerHTML = "";
+  products.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "bg-white p-4 rounded shadow";
+    div.innerHTML = `
+      <div class="flex justify-between"><div>
+        <div class="font-semibold">${p.name}</div>
+        <div class="text-sm text-gray-600">Rp ${p.price}</div>
+      </div>
+      <div>
+        <input id="st-${p.id}" type="number" class="w-20 border p-1 rounded" value="${p.stock}">
+        <button class="ml-2 bg-blue-600 text-white px-3 py-1 rounded" onclick="updateStock(${p.id})">Update</button>
+      </div></div>
+    `;
+    adminList.appendChild(div);
+  });
 
-    const pbox = document.getElementById("admin-products");
-    pbox.innerHTML = "";
+  document.getElementById("income").textContent = `Total pendapatan: Rp ${incomeRes.totalIncome}`;
 
-    prod.forEach(p => {
-        pbox.innerHTML += `
-            <div class="card">
-                <h3>${p.name}</h3>
-                <p>Rp ${p.price}</p>
-                <p>Stok: ${p.stock}</p>
-                <input id="st${p.id}" type="number" value="${p.stock}">
-                <button onclick="updateStock(${p.id})">Update</button>
-            </div>
-        `;
-    });
-
-    const tbox = document.getElementById("transactions");
-    tbox.innerHTML = "";
-
-    inc.transactions.forEach(t => {
-        tbox.innerHTML += `<p>Transaksi #${t.id} — Rp ${t.total}</p>`;
-    });
+  const txs = incomeRes.transactions || [];
+  const txList = document.getElementById("tx-list");
+  txList.innerHTML = txs.map(t => `<div class="bg-white p-3 rounded shadow">#${t.id} — Rp ${t.total} — ${new Date(t.createdAt).toLocaleString()}</div>`).join("");
 }
 
 async function updateStock(id) {
-    const newStock = Number(document.getElementById("st" + id).value);
-
-    const res = await fetch(API + "/products/update", {
-        method: "POST",
-        headers: { "Content-Type":"application/json" },
-        body: JSON.stringify({ id, stock: newStock })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-        alert("Stok diperbarui");
-        loadAdmin();
-    }
+  const v = Number(document.getElementById("st-" + id).value);
+  const res = await apiPost("/products/update", { id, stock: v });
+  if (res && res.success) { alert("Stock updated"); loadAdmin(); } else alert("Failed");
 }
-
-loadAdmin();
+function logout(){ localStorage.removeItem("atk_user"); window.location.href="index.html"; }

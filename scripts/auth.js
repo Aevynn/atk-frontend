@@ -1,30 +1,21 @@
-async function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+async function doLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msg = document.getElementById("msg");
+  msg.textContent = "";
 
-    const res = await fetch(API + "/auth/login", {
-        method: "POST",
-        headers: { "Content-Type":"application/json" },
-        body: JSON.stringify({ username, password })
-    });
+  if (!username || !password) { msg.textContent = "Masukkan username & password"; return; }
 
-    const data = await res.json();
+  const res = await apiPost("/auth/login", { username, password });
 
-    if (!data.success) {
-        document.getElementById("msg").innerText = "Login gagal";
-        return;
-    }
+  if (!res || !res.success) {
+    msg.textContent = (res && res.message) ? res.message : "Login gagal";
+    return;
+  }
 
-    localStorage.setItem("user", JSON.stringify(data.user));
+  // store user minimal
+  localStorage.setItem("atk_user", JSON.stringify(res.user));
 
-    if (data.user.role === "admin") {
-        window.location = "admin.html";
-    } else {
-        window.location = "user.html";
-    }
-}
-
-function logout() {
-    localStorage.removeItem("user");
-    window.location = "index.html";
+  if (res.user.role === "admin") window.location.href = "admin.html";
+  else window.location.href = "shop.html";
 }
