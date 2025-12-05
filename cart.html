@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Keranjang</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div>Keranjang Anda</div>
+</nav>
+
+<div class="container">
+  <div id="cart"></div>
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+const API = "https://atk-backend2-production.up.railway.app";
+let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+function render() {
+  let html = "";
+  cart.forEach(c => {
+    html += `
+      <div class="card">
+        <h3>${c.name}</h3>
+        <p>Qty: ${c.qty}</p>
+      </div>
+    `;
+  });
+  document.getElementById("cart").innerHTML = html;
+}
+
+async function checkout() {
+  const res = await fetch(`${API}/checkout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cart)
+  });
+
+  const data = await res.json();
+
+  alert(data.message);
+
+  if (res.ok) {
+    cart = [];
+    localStorage.setItem("cart", "[]");
+    location.href = "products.html";
+  }
+}
+
+render();
+</script>
+
+</body>
+</html>

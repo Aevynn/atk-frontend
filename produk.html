@@ -1,77 +1,53 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Produk - Toko ATK</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Produk ATK</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body>
 
-<body class="bg-gray-100">
+<nav>
+  <div>Produk ATK</div>
+  <div>
+    <a href="cart.html" style="color:white;">Keranjang</a>
+  </div>
+</nav>
 
-  <!-- Navbar -->
-  <nav class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-lg font-bold text-blue-600">Toko ATK Online</h1>
-    <button onclick="logout()" class="text-red-600 hover:underline">Logout</button>
-  </nav>
+<div class="container">
+  <div id="list"></div>
+</div>
 
-  <!-- Content -->
-  <section class="p-6">
-    <h2 class="text-2xl font-bold mb-4">Daftar Produk</h2>
+<script>
+const API = "https://atk-backend2-production.up.railway.app";
+let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
-  </section>
+async function loadProducts() {
+  const res = await fetch(`${API}/products`);
+  const data = await res.json();
 
-  <script>
-    const API = "https://atk-backend2-production.up.railway.app";
-    const role = localStorage.getItem("role");
+  let html = "";
+  data.forEach(p => {
+    html += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>Rp ${p.price}</p>
+        <p>Stock: ${p.stock}</p>
+        <button onclick="add(${p.id}, '${p.name}', ${p.price})">Tambah</button>
+      </div>
+    `;
+  });
 
-    async function load() {
-      const res = await fetch(`${API}/products`);
-      const data = await res.json();
+  document.getElementById("list").innerHTML = html;
+}
 
-      const container = document.getElementById("product-list");
-      container.innerHTML = "";
+function add(id, name, price) {
+  cart.push({ id, name, price, qty: 1 });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Ditambahkan ke keranjang");
+}
 
-      data.forEach(p => {
-        container.innerHTML += `
-          <div class="bg-white shadow p-4 rounded">
-            <h3 class="font-bold text-lg">${p.name}</h3>
-            <p>Stok: ${p.stock}</p>
-            <p class="font-semibold">Rp ${p.price}</p>
-
-            ${role === "admin" ? `
-              <input type="number" id="stock-${p.id}" class="border p-2 mt-3 w-full rounded" placeholder="Ubah Stok">
-              <button onclick="updateStock(${p.id})"
-                      class="bg-blue-600 text-white w-full mt-2 py-1 rounded">Update</button>
-            ` : ""}
-          </div>
-        `;
-      });
-    }
-
-    async function updateStock(id) {
-      const newStock = document.getElementById("stock-" + id).value;
-
-      await fetch(`${API}/products/${id}/stock`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ stock: Number(newStock) })
-      });
-
-      alert("Stok berhasil diperbarui!");
-      load();
-    }
-
-    function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
-    }
-
-    load();
-  </script>
+loadProducts();
+</script>
 
 </body>
 </html>
