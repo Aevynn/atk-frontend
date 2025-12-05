@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script/api.js"></script>
-  <script defer src="script/admin.js"></script>
+    <meta charset="UTF-8">
+    <title>Admin - ATK Store</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="header">
-  <h1>Admin Dashboard</h1>
-  <button class="btn-small" onclick="logout()">Logout</button>
+<header>
+    <h1>Admin Dashboard</h1>
+    <button onclick="logout()" class="logout-btn">Logout</button>
 </header>
 
-<div class="admin-container">
-  <h2>Stok Produk</h2>
+<div class="container">
+    <div class="admin-box">
+        <h2>Stok Produk</h2>
+        <div id="admin-products"></div>
+    </div>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nama</th>
-        <th>Harga</th>
-        <th>Stok</th>
-        <th>Update</th>
-      </tr>
-    </thead>
-    <tbody id="admin-products"></tbody>
-  </table>
-
-  <h2>Total Pendapatan</h2>
-  <p id="income">Rp 0</p>
+    <div class="admin-box">
+        <h2>Total Pendapatan</h2>
+        <p id="income">Loading...</p>
+    </div>
 </div>
 
+<script src="app.js"></script>
 </body>
 </html>
