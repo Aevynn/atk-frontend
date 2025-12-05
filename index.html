@@ -1,25 +1,93 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ATK Store - Landing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATK Grocery</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50">
 
-  <header class="bg-white shadow">
-    <div class="max-w-4xl mx-auto p-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-600">Toko ATK</h1>
-      <a href="login.html" class="text-blue-600 font-semibold">Login</a>
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">ATK Grocery</h1>
+
+      <a href="login.html"
+         class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        Login
+      </a>
     </div>
-  </header>
+  </nav>
 
-  <main class="max-w-4xl mx-auto text-center py-24">
-    <h2 class="text-4xl font-extrabold mb-4">Belanja ATK — Mudah & Cepat</h2>
-    <p class="text-gray-600 mb-8">Pulpen, pensil, buku, dan kebutuhan kantor lainnya.</p>
-    <a href="login.html" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg">Mulai Belanja</a>
-  </main>
+  <!-- HERO SECTION -->
+  <section class="relative bg-gradient-to-br from-blue-600 to-indigo-700 text-white py-24 px-6">
+    <div class="max-w-4xl mx-auto text-center fade-up">
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+        Solusi Belanja ATK Lebih Mudah & Cepat
+      </h2>
+
+      <p class="text-lg opacity-90 mb-8">
+        Dapatkan peralatan ATK berkualitas seperti pulpen, pensil, buku tulis, dan banyak lagi.
+        Belanja hanya dengan beberapa klik.
+      </p>
+
+      <a href="login.html"
+         class="px-8 py-4 bg-white text-blue-700 rounded-full shadow-md text-lg font-semibold hover:bg-gray-200 transition">
+        Mulai Belanja
+      </a>
+    </div>
+  </section>
+
+  <!-- REKOMENDASI -->
+  <section class="py-16 px-6">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-3xl font-bold text-gray-800 text-center mb-10">
+        Produk ATK Terlaris
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Card Item -->
+        <div class="bg-white rounded-xl shadow-md p-6 hover:scale-105 transition cursor-pointer">
+          <img src="https://cdn-icons-png.flaticon.com/512/3209/3209895.png"
+               class="w-20 mx-auto mb-4" />
+          <h4 class="text-xl font-semibold text-gray-800 text-center">Pulpen Gel</h4>
+          <p class="text-center text-gray-500 mt-2">Rp 5.000</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6 hover:scale-105 transition cursor-pointer">
+          <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png"
+               class="w-20 mx-auto mb-4" />
+          <h4 class="text-xl font-semibold text-gray-800 text-center">Pensil HB</h4>
+          <p class="text-center text-gray-500 mt-2">Rp 3.000</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6 hover:scale-105 transition cursor-pointer">
+          <img src="https://cdn-icons-png.flaticon.com/512/3076/3076053.png"
+               class="w-20 mx-auto mb-4" />
+          <h4 class="text-xl font-semibold text-gray-800 text-center">Buku Tulis</h4>
+          <p class="text-center text-gray-500 mt-2">Rp 7.000</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white py-6 border-t mt-20">
+    <p class="text-center text-gray-500">© 2025 ATK Grocery. Semua Hak Dilindungi.</p>
+  </footer>
 
 </body>
 </html>
