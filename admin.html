@@ -2,21 +2,27 @@
 <html>
 <head>
   <title>Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; background: #f5f5f5; margin: 0; }
+    nav { background:#007bff; padding:15px; color:white; font-size:20px; }
+    .container { padding:20px; }
+    .card { background:white; padding:15px; border-radius:8px; margin-bottom:10px; }
+    input { padding:8px; width:100px; }
+    button { padding:8px 12px; background:#007bff; color:white; border:none; cursor:pointer; }
+    button:hover { background:#005fcc; }
+  </style>
 </head>
 <body>
 
-<nav><div>Admin - Stock</div></nav>
+<nav>Admin Panel</nav>
 
-<div class="container">
-  <div id="products"></div>
-</div>
+<div class="container" id="products"></div>
 
 <script>
 const API = "https://atk-backend2-production-0509.up.railway.app";
 
 async function load() {
-  const res = await fetch(`${API}/products`);
+  const res = await fetch(API + "/products");
   const data = await res.json();
 
   let html = "";
@@ -24,10 +30,9 @@ async function load() {
     html += `
       <div class="card">
         <h3>${p.name}</h3>
-        <p>Stock: ${p.stock}</p>
-
+        <p>Stock sekarang: ${p.stock}</p>
         <input id="s${p.id}" type="number" value="${p.stock}">
-        <button onclick="update(${p.id})">Update</button>
+        <button onclick="update(${p.id})">Update Stock</button>
       </div>
     `;
   });
@@ -38,9 +43,9 @@ async function load() {
 async function update(id) {
   const stock = parseInt(document.getElementById("s" + id).value);
 
-  const res = await fetch(`${API}/admin/update`, {
+  const res = await fetch(API + "/admin/update", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ id, stock })
   });
 

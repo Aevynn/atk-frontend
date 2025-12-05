@@ -2,27 +2,30 @@
 <html>
 <head>
   <title>Produk ATK</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; background: #f5f5f5; margin: 0; }
+    nav { background: #007bff; padding: 15px; color: white; display: flex; justify-content: space-between; }
+    .container { padding: 20px; }
+    .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
+    button { background: #007bff; color:white; padding:8px 12px; border:none; cursor:pointer; }
+    button:hover { background:#005fcc; }
+  </style>
 </head>
 <body>
 
 <nav>
   <div>Produk ATK</div>
-  <div>
-    <a href="cart.html" style="color:white;">Keranjang</a>
-  </div>
+  <a href="cart.html" style="color:white;">Keranjang</a>
 </nav>
 
-<div class="container">
-  <div id="list"></div>
-</div>
+<div class="container" id="list"></div>
 
 <script>
 const API = "https://atk-backend2-production-0509.up.railway.app";
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
 async function loadProducts() {
-  const res = await fetch(`${API}/products`);
+  const res = await fetch(API + "/products");
   const data = await res.json();
 
   let html = "";
@@ -30,9 +33,9 @@ async function loadProducts() {
     html += `
       <div class="card">
         <h3>${p.name}</h3>
-        <p>Rp ${p.price}</p>
+        <p>Harga: Rp ${p.price}</p>
         <p>Stock: ${p.stock}</p>
-        <button onclick="add(${p.id}, '${p.name}', ${p.price})">Tambah</button>
+        <button onclick="add(${p.id}, '${p.name}', ${p.price})">Tambah ke Keranjang</button>
       </div>
     `;
   });
