@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Belanja - ATK Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
 <header>
     <h1>ATK Store</h1>
-    <button onclick="logout()" class="logout-btn">Logout</button>
+    <button onclick="logout()">Logout</button>
 </header>
 
-<div class="container">
+<section>
+    <h2>Produk</h2>
+    <div id="product-list"></div>
 
-    <div class="product-list">
-        <h2>Daftar Produk</h2>
-        <div id="products"></div>
-    </div>
+    <h2>Keranjang</h2>
+    <div id="cart"></div>
 
-    <div class="cart">
-        <h2>Keranjang</h2>
-        <div id="cart-items"></div>
-        <button onclick="checkout()" class="btn-primary">Checkout</button>
-    </div>
+    <button onclick="checkout()" class="btn">Checkout</button>
+    <p id="total"></p>
+</section>
 
-</div>
-
-<script src="app.js"></script>
+<script src="scripts/api.js"></script>
+<script src="scripts/user.js"></script>
 </body>
 </html>

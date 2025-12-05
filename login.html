@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login - ATK Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-<div class="login-box">
-    <h2>Login</h2>
+<div class="center-box">
+    <h2>Login Akun</h2>
 
-    <input id="username" type="text" placeholder="Username">
+    <input id="username" placeholder="Username">
     <input id="password" type="password" placeholder="Password">
 
-    <button onclick="login()">Masuk</button>
+    <button onclick="login()">Login</button>
 
-    <p id="msg"></p>
+    <p id="msg" class="error"></p>
 </div>
 
-<script src="app.js"></script>
+<script src="scripts/api.js"></script>
+<script src="scripts/auth.js"></script>
 </body>
 </html>
