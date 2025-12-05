@@ -1,4 +1,4 @@
-const BASE_URL = "https://railway-your-backend-url.up.railway.app";
+const BASE_URL = "https://atk-backend2-production-0509.up.railway.app/";
 
 // ---------------- LOGIN ---------------- //
 async function login() {
