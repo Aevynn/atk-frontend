@@ -1,35 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Toko ATK Online</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="index.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body>
 
-<body class="bg-gray-100">
+  <header class="header">
+    <h1>Toko ATK Online</h1>
+    <p>Solusi kebutuhan alat tulis kantor Anda</p>
+  </header>
 
-  <!-- NAVBAR -->
-  <nav class="bg-white shadow p-4 flex justify-between">
-    <h1 class="text-xl font-bold">Toko ATK Online</h1>
-
-    <div id="nav-right" class="space-x-4">
-      <!-- JS akan isi otomatis -->
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="text-center p-10 bg-blue-600 text-white">
-    <h2 class="text-4xl font-bold">Belanja ATK dengan Mudah</h2>
-    <p class="mt-3">Pen, Pensil, Buku dan Peralatan Kantor Lainnya</p>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="p-6">
-    <h2 class="text-2xl font-bold mb-4">Produk</h2>
-    <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-  </section>
+  <main class="landing">
+    <button onclick="location.href='login.html'" class="btn-large">
+      Mulai Belanja
+    </button>
+  </main>
 
 </body>
 </html>

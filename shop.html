@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Belanja ATK</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script/api.js"></script>
+  <script defer src="script/shop.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <h1>Belanja ATK</h1>
+  <button class="btn-small" onclick="logout()">Logout</button>
+</header>
+
+<div class="shop-container">
+
+  <!-- Produk Grid -->
+  <div id="product-list" class="product-grid"></div>
+
+  <!-- Mini Cart -->
+  <div class="cart-panel">
+    <h3>Keranjang</h3>
+    <div id="cart-items"></div>
+    <hr>
+    <p>Total: <b id="cart-total">0</b></p>
+    <button class="btn" onclick="checkout()">Checkout</button>
+  </div>
+
+</div>
+
+</body>
+</html>

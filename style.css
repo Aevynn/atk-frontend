@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f5f5;
+}
+
+/* Header */
+.header {
+  background: #0166FF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Landing Page */
+.landing {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.btn-large {
+  padding: 20px 40px;
+  font-size: 24px;
+  background: #0166FF;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.login-container {
+  max-width: 330px;
+  margin: 80px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.btn, .btn-small {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #0166FF;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Shop */
+.shop-container {
+  display: flex;
+  padding: 20px;
+}
+
+.product-grid {
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.product-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cart-panel {
+  width: 25%;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+  height: fit-content;
+}
+
+/* Admin */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table td, .table th {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+}
