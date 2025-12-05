@@ -1,60 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Admin Panel</title>
-  <style>
-    body { font-family: Arial; background: #f5f5f5; margin: 0; }
-    nav { background:#007bff; padding:15px; color:white; font-size:20px; }
-    .container { padding:20px; }
-    .card { background:white; padding:15px; border-radius:8px; margin-bottom:10px; }
-    input { padding:8px; width:100px; }
-    button { padding:8px 12px; background:#007bff; color:white; border:none; cursor:pointer; }
-    button:hover { background:#005fcc; }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="admin.js"></script>
 </head>
-<body>
+<body class="bg-gray-100">
 
-<nav>Admin Panel</nav>
+  <nav class="bg-white shadow p-4 flex justify-between">
+    <h1 class="text-xl font-bold">Admin Panel</h1>
+    <a href="index.html" class="text-blue-600 hover:underline">Kembali</a>
+  </nav>
 
-<div class="container" id="products"></div>
+  <div class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Edit Stok Produk</h2>
 
-<script>
-const API = "https://atk-backend2-production-0509.up.railway.app";
-
-async function load() {
-  const res = await fetch(API + "/products");
-  const data = await res.json();
-
-  let html = "";
-  data.forEach(p => {
-    html += `
-      <div class="card">
-        <h3>${p.name}</h3>
-        <p>Stock sekarang: ${p.stock}</p>
-        <input id="s${p.id}" type="number" value="${p.stock}">
-        <button onclick="update(${p.id})">Update Stock</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("products").innerHTML = html;
-}
-
-async function update(id) {
-  const stock = parseInt(document.getElementById("s" + id).value);
-
-  const res = await fetch(API + "/admin/update", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ id, stock })
-  });
-
-  const data = await res.json();
-  alert(data.message);
-}
-
-load();
-</script>
+    <div id="admin-product-list" class="space-y-4"></div>
+  </div>
 
 </body>
 </html>

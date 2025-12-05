@@ -1,54 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
-  <style>
-    body { font-family: Arial; background: #f5f5f5; }
-    .container { width: 90%; max-width: 400px; margin: 40px auto; background: white; padding: 20px; border-radius: 10px; }
-    input { width: 100%; padding: 10px; margin-bottom: 10px; }
-    button { width: 100%; background: #007bff; color: white; padding: 10px; border: none; cursor: pointer; }
-    button:hover { background: #005fcc; }
-    #msg { color: red; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toko ATK Online</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script defer src="index.js"></script>
 </head>
-<body>
+<body class="bg-gray-100">
 
-<div class="container">
-  <h2>Login</h2>
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow p-4 flex justify-between">
+    <h1 class="text-xl font-bold">Toko ATK Online</h1>
 
-  <input id="user" placeholder="Username">
-  <input id="pass" placeholder="Password" type="password">
+    <div class="space-x-4">
+      <a href="cart.html" class="text-blue-600 hover:underline">Keranjang</a>
+      <a href="admin.html" class="text-blue-600 hover:underline">Admin</a>
+      <a href="index.html" class="text-blue-600 hover:underline">Logout</a>
+    </div>
+  </nav>
 
-  <button onclick="login()">Login</button>
+  <!-- HERO -->
+  <section class="text-center p-10 bg-blue-600 text-white">
+    <h2 class="text-4xl font-bold">Belanja ATK dengan Mudah</h2>
+    <p class="mt-3">Pen, Pensil, Buku dan Peralatan Kantor Lainnya</p>
+  </section>
 
-  <p id="msg"></p>
-</div>
+  <!-- PRODUCTS -->
+  <section class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Produk</h2>
 
-<script>
-const API = "https://atk-backend2-production-0509.up.railway.app";
-
-async function login() {
-  const username = document.getElementById("user").value;
-  const password = document.getElementById("pass").value;
-
-  const res = await fetch(API + "/login", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ username, password })
-  });
-
-  if (!res.ok) {
-    document.getElementById("msg").innerText = "Login gagal!";
-    return;
-  }
-
-  const data = await res.json();
-  localStorage.setItem("role", data.role);
-
-  if (data.role === "admin") location.href = "admin.html";
-  else location.href = "products.html";
-}
-</script>
+    <div id="product-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+  </section>
 
 </body>
 </html>
