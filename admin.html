@@ -1,3 +1,4 @@
+<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,29 +6,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin - ATK Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- WAJIB agar logout + token + admin guard bekerja -->
   <script src="js/api.js"></script>
   <script src="js/auth.js" defer></script>
-
-  <!-- Admin script -->
   <script src="js/admin.js" defer></script>
 </head>
-
 <body class="bg-gray-50">
 
-<!-- Proteksi halaman admin -->
+<!-- Admin guard script runs in admin.js but we also do a quick check -->
 <script>
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-
-  if (!token) {
-    // belum login
-    window.location.href = "login.html";
-  } else if (role !== "admin") {
-    // user mencoba masuk admin
-    window.location.href = "index.html";
-  }
+  const u = (function(){ try { return JSON.parse(localStorage.getItem('atk_user')); } catch { return null; } })();
+  if (!u || u.role !== 'admin') { window.location = 'login.html'; }
 </script>
 
 <header class="bg-white shadow">
@@ -40,38 +28,26 @@
 </header>
 
 <main class="max-w-6xl mx-auto p-6">
-
   <div class="flex gap-4 mb-6">
-    <button onclick="showTab('products')" id="tabProducts" class="px-4 py-2 bg-blue-600 text-white rounded">
-      Kelola Produk
-    </button>
-    <button onclick="showTab('orders')" id="tabOrders" class="px-4 py-2 bg-gray-200 rounded">
-      Kelola Pesanan
-    </button>
+    <button onclick="showTab('products')" id="tabProducts" class="px-4 py-2 bg-blue-600 text-white rounded">Kelola Produk</button>
+    <button onclick="showTab('orders')" id="tabOrders" class="px-4 py-2 bg-gray-200 rounded">Kelola Pesanan</button>
   </div>
 
-  <!-- PANEL PRODUK -->
   <section id="panelProducts">
     <h2 class="text-2xl font-bold mb-4">Produk</h2>
-
     <div class="mb-4 flex gap-2">
       <input id="newName" class="border p-2 rounded" placeholder="Nama produk" />
       <input id="newPrice" class="border p-2 rounded w-28" placeholder="Harga" type="number" />
       <input id="newStock" class="border p-2 rounded w-28" placeholder="Stok" type="number" />
-      <button onclick="addProduct()" class="bg-green-600 text-white px-4 py-2 rounded">
-        Tambah
-      </button>
+      <button onclick="addProduct()" class="bg-green-600 text-white px-4 py-2 rounded">Tambah</button>
     </div>
-
     <div id="productTable" class="space-y-2"></div>
   </section>
 
-  <!-- PANEL PESANAN -->
   <section id="panelOrders" class="hidden">
     <h2 class="text-2xl font-bold mb-4">Pesanan</h2>
     <div id="ordersTable" class="space-y-2"></div>
   </section>
-
 </main>
 
 </body>
