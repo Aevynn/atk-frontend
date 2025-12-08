@@ -5,27 +5,41 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin - ATK Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="scripts/api.js"></script>
-  <script src="scripts/admin.js" defer></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js" defer></script>
 </head>
 <body class="bg-gray-50">
 
 <header class="bg-white shadow">
   <div class="max-w-6xl mx-auto p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold text-blue-600">Admin Panel</h1>
-    <button onclick="logout()" class="text-red-600">Logout</button>
+    <div>
+      <button onclick="logout()" class="text-red-600">Logout</button>
+    </div>
   </div>
 </header>
 
 <main class="max-w-6xl mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-4">Produk & Stok</h2>
-  <div id="admin-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+  <div class="flex gap-4 mb-6">
+    <button onclick="showTab('products')" id="tabProducts" class="px-4 py-2 bg-blue-600 text-white rounded">Kelola Produk</button>
+    <button onclick="showTab('orders')" id="tabOrders" class="px-4 py-2 bg-gray-200 rounded">Kelola Pesanan</button>
+  </div>
 
-  <h2 class="text-2xl font-bold mt-8">Pendapatan</h2>
-  <div id="income" class="mt-2"></div>
+  <section id="panelProducts">
+    <h2 class="text-2xl font-bold mb-4">Produk</h2>
+    <div class="mb-4 flex gap-2">
+      <input id="newName" class="border p-2 rounded" placeholder="Nama produk" />
+      <input id="newPrice" class="border p-2 rounded w-28" placeholder="Harga" type="number" />
+      <input id="newStock" class="border p-2 rounded w-28" placeholder="Stok" type="number" />
+      <button onclick="addProduct()" class="bg-green-600 text-white px-4 py-2 rounded">Tambah</button>
+    </div>
+    <div id="productTable" class="space-y-2"></div>
+  </section>
 
-  <h2 class="text-2xl font-bold mt-8">Transaksi</h2>
-  <div id="tx-list" class="mt-2 space-y-2"></div>
+  <section id="panelOrders" class="hidden">
+    <h2 class="text-2xl font-bold mb-4">Pesanan</h2>
+    <div id="ordersTable" class="space-y-2"></div>
+  </section>
 </main>
 
 </body>

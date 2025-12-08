@@ -5,66 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Login - ATK Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="scripts/api.js"></script>
-  <script src="scripts/auth.js" defer></script>
-  <script>
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const errorBox = document.getElementById("loginError");
-    errorBox.classList.add("hidden"); 
-
-    try {
-        const response = await fetch("https://atk-backend2-production-0509.up.railway.app/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            // ❌ Jika credential salah
-            errorBox.textContent = data.message || "Username atau password salah.";
-            errorBox.classList.remove("hidden");
-            return;
-        }
-
-        // ✔ Login berhasil
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("role", data.role);
-
-        if (data.role === "admin") {
-            window.location.href = "admin.html";
-        } else {
-            window.location.href = "index.html";
-        }
-
-    } catch (err) {
-        errorBox.textContent = "Gagal menghubungi server. Coba lagi nanti.";
-        errorBox.classList.remove("hidden");
-    }
-});
-</script>
-
+  <script src="js/api.js"></script>
+  <script src="js/auth.js" defer></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center">
 
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold mb-4">Login</h2>
-    <p id="loginError" class="hidden text-red-600 text-center mb-4"></p>
+    <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
 
-
-    <input id="username" placeholder="Username" class="w-full mb-3 p-2 border rounded" />
-    <input id="password" placeholder="Password" type="password" class="w-full mb-4 p-2 border rounded" />
-    <div id="msg" class="text-red-600 mb-3"></div>
-
-    <div class="flex space-x-3">
-      <button onclick="doLogin()" class="flex-1 bg-blue-600 text-white py-2 rounded">Login</button>
-      <a href="index.html" class="flex-1 text-center border rounded py-2">Cancel</a>
-    </div>
+    <form id="loginForm" class="space-y-3">
+      <input id="username" class="w-full p-3 border rounded" placeholder="Username" />
+      <input id="password" type="password" class="w-full p-3 border rounded" placeholder="Password" />
+      <p id="loginError" class="text-red-600 hidden"></p>
+      <div class="flex gap-3">
+        <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded">Login</button>
+        <a href="register.html" class="flex-1 text-center border rounded py-2">Register</a>
+      </div>
+    </form>
 
     <p class="mt-4 text-sm text-gray-500">Demo creds — admin/admin123 | user/user123</p>
   </div>
