@@ -1,31 +1,32 @@
-// Login form handling
-document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
+// auth.js - login & register handling using api.js helpers
+document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const user = document.getElementById("username").value.trim();
-  const pass = document.getElementById("password").value.trim();
-  const err = document.getElementById("loginError");
-  err.classList.add("hidden"); err.textContent = "";
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const err = document.getElementById('loginError');
+  err.classList.add('hidden');
 
-  if (!user || !pass) { err.textContent = "Isi username & password"; err.classList.remove("hidden"); return; }
-
-  try {
-    const res = await apiPost("/auth/login", { username: user, password: pass });
-    if (!res || !res.message && !res.success && !res.user) {
-      // older backend returns success:true + user or returns 200 with user — handle both
-    }
-    if (res?.role || res?.user) {
-      // support both shapes
-      const u = res.user || { username: res.username, role: res.role };
-      localStorage.setItem("atk_user", JSON.stringify(u));
-      if (u.role === "admin") window.location = "admin.html";
-      else window.location = "shop.html";
-    } else {
-      // maybe error in body
-      err.textContent = res.message || "Username atau password salah";
-      err.classList.remove("hidden");
-    }
-  } catch (errx) {
-    err.textContent = "Gagal menghubungi server";
-    err.classList.remove("hidden");
+  const res = await apiPost('/auth/login', { username, password });
+  if (!res || !res.success) {
+    err.textContent = res?.message || 'Login failed';
+    err.classList.remove('hidden');
+    return;
   }
+
+  localStorage.setItem('atk_user', JSON.stringify(res.user));
+  if (res.user.role === 'admin') window.location = 'admin.html';
+  else window.location = 'shop.html';
+});
+
+document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('regUsername').value.trim();
+  const password = document.getElementById('regPassword').value.trim();
+  const res = await apiPost('/auth/register', { username, password });
+  if (!res || !res.success) {
+    document.getElementById('regError').classList.remove('hidden');
+    return;
+  }
+  alert('Register success, please login');
+  window.location = 'login.html';
 });
