@@ -8,26 +8,84 @@
 </head>
 <body class="bg-gray-50">
 
-<header class="bg-white shadow">
+<!-- HEADER -->
+<header class="bg-white shadow-md">
   <div class="max-w-4xl mx-auto p-6 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-600">Toko ATK</h1>
-    <a href="login.html" class="text-blue-600 font-semibold">Login</a>
+    <a href="login.html" class="text-blue-600 font-semibold hover:underline">Login</a>
   </div>
 </header>
 
+<!-- HERO -->
 <main class="max-w-4xl mx-auto text-center py-20 px-4">
-  <h2 class="text-4xl font-extrabold mb-4">Belanja ATK — Praktis untuk Mahasiswa</h2>
-  <p class="text-gray-600 mb-8">Pulpen, pensil, buku, stabilo—tips penggunaan ringkas untuk membantu kegiatan belajar.</p>
-  <a href="shop.html" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg">Mulai Belanja</a>
+  <h2 class="text-4xl font-extrabold mb-4 text-gray-800">Belanja ATK — Praktis untuk Mahasiswa</h2>
+  <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+    Dari pulpen hingga buku catatan — kami menyediakan perlengkapan sederhana namun penting 
+    untuk menunjang produktivitas belajar Anda setiap hari.
+  </p>
+  
+  <!-- Arahkan ke login dulu -->
+  <a href="login.html" 
+     class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg shadow hover:bg-blue-700 transition">
+     Mulai Belanja
+  </a>
 </main>
 
+<!-- REKOMENDASI PRODUK -->
 <section class="bg-gray-50 py-16 px-6">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-3xl font-bold text-gray-800 text-center mb-10">Rekomendasi Penggunaan Produk ATK</h2>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="p-6 bg-white rounded-xl shadow"> <h3 class="text-xl font-semibold mb-3">Pulpen Gel</h3> <p class="text-gray-600">Ideal untuk mencatat cepat di kelas. Aliran tinta halus membuat nyaman menulis paragraf panjang.</p></div>
-      <div class="p-6 bg-white rounded-xl shadow"> <h3 class="text-xl font-semibold mb-3">Pensil HB</h3> <p class="text-gray-600">Cocok untuk membuat diagram, sketsa konsep, atau kerja yang butuh koreksi.</p></div>
-      <div class="p-6 bg-white rounded-xl shadow"> <h3 class="text-xl font-semibold mb-3">Buku Tulis 80 Halaman</h3> <p class="text-gray-600">Efektif untuk satu mata kuliah atau satu proyek, agar catatan rapi.</p></div>
+
+      <!-- Pulpen Gel -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Pulpen Gel</h3>
+        <p class="text-gray-600">
+          Nyaman untuk mencatat cepat saat kuliah. Cocok untuk menulis paragraf panjang tanpa membuat tangan cepat lelah.
+        </p>
+      </div>
+
+      <!-- Pensil HB -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Pensil HB</h3>
+        <p class="text-gray-600">
+          Ideal untuk membuat diagram, memetakan ide, dan sketsa konsep tugas kuliah.
+        </p>
+      </div>
+
+      <!-- Buku Tulis -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Buku Tulis 80 Halaman</h3>
+        <p class="text-gray-600">
+          Praktis digunakan untuk satu mata kuliah agar catatan tetap rapi dan tidak tercecer.
+        </p>
+      </div>
+
+      <!-- Stabilo / Highlighter -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Stabilo Highlighter</h3>
+        <p class="text-gray-600">
+          Membantu menandai poin penting dari slide kuliah atau buku. Cocok saat mempersiapkan ujian.
+        </p>
+      </div>
+
+      <!-- Map / Folder Dokumen -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Map Dokumen</h3>
+        <p class="text-gray-600">
+          Solusi terbaik untuk menyimpan print-out tugas, lembar jawaban, dan berkas penting agar tetap rapi.
+        </p>
+      </div>
+
+      <!-- Penghapus -->
+      <div class="p-6 bg-white rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-3">Penghapus</h3>
+        <p class="text-gray-600">
+          Membantu dalam pengerjaan hitungan atau sketsa konsep. Wajib dimiliki untuk menghindari coretan berantakan.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
