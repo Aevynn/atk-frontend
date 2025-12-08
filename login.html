@@ -30,24 +30,29 @@
 
   <p class="mt-4 text-sm text-gray-500">Demo creds — admin/admin123 | user/user123</p>
 </div>
-<a href="index.html" class="back-button">Kembali ke Beranda</a>
+<a href="index.html" class="back-btn-bottom">← Kembali ke Beranda</a>
 
 <style>
-    .back-button {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 16px;
-        background: #ccc;
-        border-radius: 6px;
+    .back-btn-bottom {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.15); /* mengikuti background web */
+        backdrop-filter: blur(6px);
+        border-radius: 8px;
+        color: #222;
         text-decoration: none;
-        color: #000;
-        font-weight: bold;
+        font-weight: 600;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        transition: 0.2s ease;
     }
 
-    .back-button:hover {
-        background: #b5b5b5;
+    .back-btn-bottom:hover {
+        background: rgba(255, 255, 255, 0.28);
     }
 </style>
+
 
 </body>
 </html>
