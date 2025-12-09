@@ -11,11 +11,36 @@
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center">
 
+  <a href="index.html" class="back-btn-corner">← Kembali</a>
+
+<style>
+    .back-btn-corner {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 8px 14px;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.2); /* mengikuti background website */
+        backdrop-filter: blur(6px);
+        border-radius: 8px;
+        text-decoration: none;
+        color: #222;
+        font-weight: 600;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        transition: 0.2s ease;
+    }
+
+    .back-btn-corner:hover {
+        background: rgba(255, 255, 255, 0.35);
+    }
+</style>
+
 
 
 
 <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
   <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+
 
   <form id="loginForm" class="space-y-3">
     <input id="username" class="w-full p-3 border rounded" placeholder="Username" />
@@ -30,28 +55,6 @@
 
   <p class="mt-4 text-sm text-gray-500">Demo creds — admin/admin123 | user/user123</p>
 </div>
-<a href="index.html" class="back-btn-bottom">← Kembali ke Beranda</a>
-
-<style>
-    .back-btn-bottom {
-        display: block;
-        margin-top: 20px;
-        text-align: center;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.15); /* mengikuti background web */
-        backdrop-filter: blur(6px);
-        border-radius: 8px;
-        color: #222;
-        text-decoration: none;
-        font-weight: 600;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        transition: 0.2s ease;
-    }
-
-    .back-btn-bottom:hover {
-        background: rgba(255, 255, 255, 0.28);
-    }
-</style>
 
 
 </body>
